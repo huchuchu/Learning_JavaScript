@@ -26,20 +26,46 @@ $(document).ready(function(){
         return Car;
       })();
 
-    const car1 = new Car ("Tesla", "Model S");
-    const car2 = new Car ("Mazda", "3i");
+    class InsurancePolicy{}
+    function makeInsurable(o){
+        o.addInsurancePolicy = function(p3) { this.InsurancePolicy = p;}
+        o.getInsurancePolicy = function(){ return this.InsurancePolicy;}
+        o.isInsured = function() { return !!this.InsurancePolicy;}
+    }
+
+    //1)
+    // makeInsurable(Car);
+    // car1.addInsurancePolicy(new InsurancePolicy());
     
+    //2)
+    // const car1 = new Car();
+    // makeInsurable(car1);
+    // car1.addInsurancePolicy(new InsurancePolicy());
 
-    console.log(car1.shift === Car.prototype.shift);
-    car1.shift('D');
-    console.log(car1.userGear); 
-    console.log(car1.shift === car2.shift);
+    //3)
+    makeInsurable(Car.prototype);
+    const car1 = new Car();
+    car1.addInsurancePolicy(new InsurancePolicy());
 
-    car1.shift = function(gear) {this.userGear = gear.toUpperCase();}
-    console.log(car1.shift === Car.prototype.shift);
-    console.log(car1.shift === car2.shift);
-    car1.shift('d');
-    console.log(car1.userGear);
+    console.log(car1.getInsurancePolicy());
+    console.log(car1.isInsured());
+    console.log(InsurancePolicy);
+    console.log(car1 instanceof InsurancePolicy);
+
+    
+    // const car1 = new Car ("Tesla", "Model S");
+    // const car2 = new Car ("Mazda", "3i");
+
+    // console.log(car1.shift === Car.prototype.shift);
+    // car1.shift('D');
+    // console.log(car1.userGear); 
+    // console.log(car1.shift === car2.shift);
+
+    // car1.shift = function(gear) {this.userGear = gear.toUpperCase();}
+    // console.log(car1.shift === Car.prototype.shift);
+    // console.log(car1.shift === car2.shift);
+    // car1.shift('d');
+    // console.log(car1.userGear);
 
     
 
