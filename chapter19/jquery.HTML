@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Page Title</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <p>paragraph1</p>
+    <p >paragraph2<span class="code">흠흠</span></p>
+    <p>paragraph3</p>
+
+<script>
+    $(function(){
+        const $paras = $('p');
+        console.log($paras.length);
+        console.log(typeof $paras);
+        console.log($paras instanceof $);
+        console.log($paras instanceof jQuery);
+
+        // $('p').text('All PARAGRAPHS REPLACED');
+
+        // $('p').html('<i>ALL</i> PARAGRAPHS REPLACED');
+
+        // $('p')
+        //     .eq(2)
+        //     .html('<i><b>THIRD</b></i> PARAGRAPHS REPLACED');
+
+        // $('p').remove();
+        
+        $('p')
+            .append('<sup>*</sup>');
+        
+        $('p')
+            .after('<hr>')
+            .before('<hr>');
+        
+        // $('p:odd').css('color', 'red');
+
+        // $('p')
+        //     .after('<hr>')
+        //     .append('<sup>*</sup>')
+        //     .filter(':odd')
+        //     .css('color', 'red');
+
+        $('p')
+            .find('.code')
+            .css('font-size', '200px');
+        
+    });
+</script>    
+</body>
+</html>
