@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Simple HTML</title>
+    <style>
+        .callout{
+            border: solid 1px #ff0080;
+            margin:  2px 4px;
+            padding:  2px 6px;
+        }
+
+        .code{
+            background: #ccc;
+            margin: 1px 2px;
+            padding: 1px 4px;
+            font-family: monospace;
+        }
+
+        .highlight{
+            background: #ff0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <header>
+        <h1>Simple HTML</h1>
+    </header>
+    <div id="content">
+        <p>This is <i>Simple</i> HTML file</p>
+        <div class="callout">
+            <p>This is as fancy as we'll get!</p>
+        </div> 
+        <p>IDs (such as <span class="code">#content</span>)
+              are unique (there can only be one per page).</p>
+        <p>Calsses (such as <span class="code">.callout</span>)
+              can be used on many elements.</p>
+        <div id="callout2" class="callout fancy">
+            <p>A single HTML element can have multiple classes.</p>
+        </div>      
+    </div> 
+
+    <button data-action="highlight" data-containing="unique">
+        Highlight paragraphs containing "unique"; 
+    </button>
+    <button data-action="removeHighlight">
+        Remove BTN
+    </button>
+
+    <script>
+        $(document).ready(function(){
+            function printDom(node, prefix){ //prefix : 공백인듯
+                console.log(prefix + node.nodeName);
+                for(let i=0; i<node.childNodes.length; i++){
+                    printDom(node.childNodes[i], prefix + '\t'); 
+                }
+            }
+            // printDom(document, ' ');
+
+            const para1 = document.getElementsByTagName('p')[0];
+            para1.textContent;
+            para1.innerHTML;
+            para1.textContent = "Modified HTML file";
+            para1.innerHTML = "Modified HTML file"
+
+            const p1 = document.createElement('p');
+            const p2 = document.createElement('p');
+            p1.textContent = "I was created dynamically";
+            p2.textContent = "I was also created dynamically"
+
+            const parent = document.getElementById('content');
+            const firstChild = parent.childNodes[0];
+
+            parent.insertBefore(p1, firstChild);
+            parent.appendChild(p2);
+
+            function highlightParas(containing){
+                if( typeof containing === "string"){
+                    containing = new RegExp(`\\b${containing}\\b`, 'i');
+                    //RegExp 생성자는 패턴을 사용한 텍스트 판별에 사용할 정규 표현식 객체를 생성합니다.
+                }
+                const paras = document.getElementsByTagName('p');
+                console.log(paras);
+                for(let p of paras){
+                    if(!containing.test(p.textContent)) continue; //test 뭐지?
+                    p.classList.add('highlight');
+                }
+            }
+            // highlightParas('unique');
+
+            function removeParaHighlights(){
+                const paras = document.querySelectorAll('p.highlight');
+                for(let p of paras){
+                    p.classList.remove('highlight');
+                }
+            }
+            // removeParaHighlights();
+
+            const highlightActions = document.querySelectorAll('[data-action="highlight"]');
+            for(let a of highlightActions){
+                a.addEventListener('click', evt => {
+                    evt.preventDefault();
+                    highlightParas(a.dataset.containing);
+                });
+            }
+
+            const removeBTN = document.querySelectorAll('[data-action="removeHighlight"]');
+            for(let a of removeBTN){
+                a.addEventListener('click', evt => {
+                    evt.preventDefault();
+                    removeParaHighlights();
+                });
+            }
+            // console.log(highlightActions[0].dataset);
+
+            // highlightActions[0].dataset.containing = "giraffe";
+            // highlightActions[0].dataset.caseSensitive = "true";
+
+
+        })
+    </script>
+</body>
+</html>
