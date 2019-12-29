@@ -4,6 +4,9 @@
     <meta charset='utf-8'>
     <title>Simple HTML</title>
     <style>
+       /* #content  p {
+            background-color: red;
+        } */
         .callout{
             border: solid 1px #ff0080;
             margin:  2px 4px;
@@ -30,13 +33,17 @@
     </header>
     <div id="content">
         <p>This is <i>Simple</i> HTML file</p>
+
         <div class="callout">
             <p>This is as fancy as we'll get!</p>
         </div> 
+
         <p>IDs (such as <span class="code">#content</span>)
               are unique (there can only be one per page).</p>
+
         <p>Calsses (such as <span class="code">.callout</span>)
               can be used on many elements.</p>
+
         <div id="callout2" class="callout fancy">
             <p>A single HTML element can have multiple classes.</p>
         </div>      
@@ -45,7 +52,7 @@
     <button data-action="highlight" data-containing="unique">
         Highlight paragraphs containing "unique"; 
     </button>
-    <button data-action="removeHighlight">
+       <button data-action="removeHighlight">
         Remove BTN
     </button>
 
@@ -80,6 +87,7 @@
                 if( typeof containing === "string"){
                     containing = new RegExp(`\\b${containing}\\b`, 'i');
                     //RegExp 생성자는 패턴을 사용한 텍스트 판별에 사용할 정규 표현식 객체를 생성합니다.
+                    console.log(containing);
                 }
                 const paras = document.getElementsByTagName('p');
                 console.log(paras);
@@ -88,7 +96,7 @@
                     p.classList.add('highlight');
                 }
             }
-            // highlightParas('unique');
+            highlightParas('unique');
 
             function removeParaHighlights(){
                 const paras = document.querySelectorAll('p.highlight');
@@ -96,9 +104,11 @@
                     p.classList.remove('highlight');
                 }
             }
-            // removeParaHighlights();
+            removeParaHighlights();
 
             const highlightActions = document.querySelectorAll('[data-action="highlight"]');
+            console.log(highlightActions)
+
             for(let a of highlightActions){
                 a.addEventListener('click', evt => {
                     evt.preventDefault();
@@ -113,10 +123,10 @@
                     removeParaHighlights();
                 });
             }
-            // console.log(highlightActions[0].dataset);
+            console.log(highlightActions[0].dataset);
 
-            // highlightActions[0].dataset.containing = "giraffe";
-            // highlightActions[0].dataset.caseSensitive = "true";
+            // // highlightActions[0].dataset.containing = "giraffe";
+            // // highlightActions[0].dataset.caseSensitive = "true";
 
 
         })
